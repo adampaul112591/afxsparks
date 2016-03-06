@@ -139,12 +139,24 @@
 
 	<profiles>
 		<profile>
-			<id>practice</id>
+			<id>dev</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
 				<build.profile.id>practice</build.profile.id>
+				<skip.unit.test>false</skip.unit.test>
+				<skip.integration.test>true</skip.integration.test>
+			</properties>
+		</profile>
+
+
+		<profile>
+			<id>practice</id>
+			<properties>
+				<build.profile.id>practice</build.profile.id>
+				<skip.unit.test>false</skip.unit.test>
+				<skip.integration.test>false</skip.integration.test>
 			</properties>
 		</profile>
 
@@ -187,6 +199,7 @@
 					<configuration>
 						<argLine>-noverify -XX:-UseSplitVerifier</argLine>
 					</configuration>
+					<skipTests>${skip.unit.tests}</skipTests>
 					<excludes>
 						<exclude>**/*IT.java</exclude>
 					</excludes>
@@ -203,17 +216,21 @@
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
+						<configuration>
+							<skipTests>${skip.integration.test}</skipTests>
+						</configuration>
 					</execution>
 					<execution>
 						<id>verify</id>
 						<goals>
 							<goal>verify</goal>
 						</goals>
+						<configuration>
+							<skipTests>${skip.integration.test}</skipTests>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-
 		</plugins>
 	</build>
 </project>
